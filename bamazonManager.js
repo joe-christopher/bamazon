@@ -1,8 +1,8 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 var Table = require('cli-table');
-var colors = require('cli-table/lib/index');
-
+var colorTable = require('cli-table/lib/index');
+var colors = require('colors');
 
 var connection = mysql.createConnection({
   host: "localhost",
@@ -30,7 +30,7 @@ function start()
         {
             type: "list",
             name: "managerSelect",
-            message: "\nMANAGE INVENTORY:  Please select one.",
+            message: "\nMANAGE INVENTORY:  Please select one.".blue,
             choices: ["View Products for Sale", "View Low Inventory", "Add to Inventory", "Add New Product", "Exit"]
         }
 
@@ -70,14 +70,14 @@ function displayProducts()
         if (err) console.log(err);
     
         var table = new Table({
-            head: ['item_id', 'product_name', 'department_name', 'price', 'stock_quantity'],
+            head: ['item_id'.blue, 'product_name'.blue, 'department_name'.blue, 'price'.blue, 'stock_quantity'.blue],
             colWidths: [10, 80, 35, 10, 18]
       });
 
       for (var i = 0; i < res.length; i++) {
           table.push([res[i].item_id, res[i].product_name, res[i].department_name, res[i].price, res[i].stock_quantity]);
       }
-      console.log("PRODUCT INVENTORY" );
+      console.log("PRODUCT INVENTORY".blue );
       console.log(table.toString());
       start();
 
@@ -90,7 +90,7 @@ function displayLowInventory()
         if (err) console.log(err);
 
         var table = new Table({
-            head: ['item_id', 'product_name', 'department_name', 'price', 'stock_quantity'],
+            head: ['item_id'.blue, 'product_name'.blue, 'department_name'.blue, 'price'.blue, 'stock_quantity'.blue],
             colWidths: [10, 80, 35, 10, 18]
       });
 
@@ -98,7 +98,7 @@ function displayLowInventory()
           table.push([res[i].item_id, res[i].product_name, res[i].department_name, res[i].price, res[i].stock_quantity]);
       }
 
-      console.log("LOW INVENTORY");
+      console.log("LOW INVENTORY".blue);
       console.log(table.toString());
       start();
 
@@ -107,7 +107,7 @@ function displayLowInventory()
 
 function addInventory(res)
 {
-     console.log("WELCOME TO BAMAZON ONLINE STORE")
+     console.log("WELCOME TO BAMAZON ONLINE STORE".blue)
      connection.query("SELECT * FROM products", function(err, res) {
         if (err) console.log(err);
 
@@ -115,38 +115,51 @@ function addInventory(res)
         ([
             {
                 name: "ID",
-                message: "Please enter the Item ID for which you would like to add inventory: "
+                message: "Please enter the Item ID for which you would like to add inventory: ".blue
             }, {
                 name: "quantity",
-                message: "Please enter the quantity of inventory you would like add: "
+                message: "Please enter the quantity of inventory you would like add: ".blue
             }
 
         ]).then(function (answers) {
-
+            var validID = false;
             for (var i = 0; i < res.length; i++) {
                 if (res[i].item_id == answers.ID) {
                     var chosenItem = res[i];
+                    validID = true;
+
+                    var item_id = answers.ID;
+                    var orderProduct = chosenItem.product_name;
+                    var addQuantity = parseInt(answers.quantity);
+                    var inStockQuantity = parseInt(chosenItem.stock_quantity);
+                    var newStockQuantity = parseInt(inStockQuantity) + parseInt(addQuantity);
+                    var price = chosenItem.price;
+                
+          
+        
+                        connection.query('UPDATE products SET ? WHERE item_id = ?', [{ stock_quantity: newStockQuantity }, item_id]);
+        
+                        // connection.end();
+                        console.log("\nThe inventory update is confirmed: \r".green);
+                        console.log("Product selected: ".green + orderProduct + "\r");
+                        console.log("Previous Quantity: ".green + inStockQuantity + "\r");
+                        console.log("Inventory Added: ".green + addQuantity + "\r");
+                        console.log("Current Quantity: ".green + newStockQuantity + "\r");
+                    
+                        start();
+
+
+
                 }
             }
-            var item_id = answers.ID;
-            var orderProduct = chosenItem.product_name;
-            var addQuantity = parseInt(answers.quantity);
-            var inStockQuantity = parseInt(chosenItem.stock_quantity);
-            var newStockQuantity = parseInt(inStockQuantity) + parseInt(addQuantity);
-            var price = chosenItem.price;
-        
-  
 
-                connection.query('UPDATE products SET ? WHERE item_id = ?', [{ stock_quantity: newStockQuantity }, item_id]);
+            if (!validID)
+                {
+                    console.log("Invalid Item ID, please start again".red);
+                    start();
 
-                // connection.end();
-                console.log("\nThe inventory update is confirmed: \r");
-                console.log("Product selected: " + orderProduct + "\r");
-                console.log("Previous Quantity: " + inStockQuantity + "\r");
-                console.log("Inventory Added: " + addQuantity + "\r");
-                console.log("Current Quantity: " + newStockQuantity + "\r");
-            
-                start();
+                }
+           
         });
     });
 
@@ -159,22 +172,22 @@ function addNewProduct() {
                 {
                     type: "input",
                     name: "product_name",
-                    message: "\nADD NEW PRODUCT:  Please enter new product name:",
+                    message: "\nADD NEW PRODUCT:  Please enter new product name:".blue,
                 },
                 {
                     type: "input",
                     name: "department_name",
-                    message: "\nPlease enter the product department:",
+                    message: "\nPlease enter the product department:".blue,
                 },
                 {
                     type: "input",
                     name: "price",
-                    message: "\nPlease enter the product price:",
+                    message: "\nPlease enter the product price:".blue,
                 },
                 {
                     type: "input",
                     name: "stock_quantity",
-                    message: "\nPlease enter the product quantity to add:",
+                    message: "\nPlease enter the product quantity to add:".blue,
                 }
     
                 // .then function to record answers
@@ -196,10 +209,10 @@ function addNewProduct() {
                 );
 
     
-                console.log("\n" + productName + " has been added with the following details:  ");
-                console.log("\rDepartment:  " + departmentName);
-                console.log("\rPrice:  " + price);
-                console.log("\rQuantity in Stock:  " + stockQuantity);
+                console.log("\n" + productName + " has been added with the following details:  ".green);
+                console.log("\rDepartment: ".green + departmentName);
+                console.log("\rPrice: ".green + price);
+                console.log("\rQuantity in Stock: ".green + stockQuantity);
                 start();
             });
     };

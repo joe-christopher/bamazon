@@ -1,7 +1,8 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 var Table = require('cli-table');
-var colors = require('cli-table/lib/index');
+var colorTable = require('cli-table/lib/index');
+var colors = require('colors');
 
 
 var connection = mysql.createConnection({
@@ -29,7 +30,7 @@ function start()
     .prompt({
       name: "postOrBid",
       type: "rawlist",
-      message: "Would you like to [BROWSE] our products or [QUIT] the application?",
+      message: "\n\nWould you like to [BROWSE] our products or [QUIT] the application?",
       choices: ["BROWSE", "QUIT"]
     })
     .then(function(answer) {
@@ -67,51 +68,62 @@ function displayProducts()
 
 function buyProducts(res)
 {
-    console.log("WELCOME TO BAMAZON ONLINE STORE")
+    console.log("WELCOME TO BAMAZON ONLINE STORE".red)
   inquirer.prompt
         ([
             {
                 name: "ID",
-                message: "Please enter the Item ID you would like to purchase: "
+                message: "Please enter the Item ID you would like to purchase: ".blue
             }, {
                 name: "quantity",
-                message: "Please enter the quantity you would like to purchase: "
+                message: "Please enter the quantity you would like to purchase: ".blue
             }
 
         ]).then(function (answers) {
 
+            var validID = false;
             for (var i = 0; i < res.length; i++) {
                 if (res[i].item_id == answers.ID) {
                     var chosenItem = res[i];
+                    validID = true;
+                    var item_id = answers.ID;
+                    var orderProduct = chosenItem.product_name;
+                    var orderQuantity = answers.quantity;
+                    var inStockQuantity = chosenItem.stock_quantity;
+                    var newStockQuantity = parseInt(inStockQuantity) - parseInt(orderQuantity);
+                    var price = chosenItem.price;
+                    var total = price * orderQuantity;
+        
+        
+                    //if there's enough inventory, change inventory and show customer total purchase cost
+                    //       
+                    if (orderQuantity <= inStockQuantity) {
+                        connection.query('UPDATE products SET ? WHERE item_id = ?', [{ stock_quantity: newStockQuantity }, item_id]);
+        
+                        // connection.end();
+                        console.log("\nThe following purchase is confirmed: \r".green);
+                        console.log("Product selected: ".green + orderProduct + "\r");
+                        console.log("Quantity: ".green + orderQuantity + "\r");
+                        console.log("Price: ".green + price + "\r");
+                        console.log("Your total is:  ".green + total);
+        
+                    }
+                    //else, notify customer of insufficient inventory
+                    else
+                        console.log("Sorry, there is insufficient stock to complete your order.".red);
+                    
+                        start();
+
                 }
-            }
-            var item_id = answers.ID;
-            var orderProduct = chosenItem.product_name;
-            var orderQuantity = answers.quantity;
-            var inStockQuantity = chosenItem.stock_quantity;
-            var newStockQuantity = parseInt(inStockQuantity) - parseInt(orderQuantity);
-            var price = chosenItem.price;
-            var total = price * orderQuantity;
+            }    
+                if (!validID)
+                {
+                    console.log("Invalid Item ID, please start again".red);
+                    start();
 
-
-            //if there's enough inventory, change inventory and show customer total purchase cost
-            //       
-            if (orderQuantity <= inStockQuantity) {
-                connection.query('UPDATE products SET ? WHERE item_id = ?', [{ stock_quantity: newStockQuantity }, item_id]);
-
-                // connection.end();
-                console.log("\nThe following purchase is confirmed: \r");
-                console.log("Product selected: " + orderProduct + "\r");
-                console.log("Quantity: " + orderQuantity + "\r");
-                console.log("Price: " + price + "\r");
-                console.log("Your total is:  " + total);
-
-            }
-            //else, notify customer of insufficient inventory
-            else
-                console.log("Sorry, there is insufficient stock to complete your order.");
+                }
             
-                start();
+  
         });
 
 };
