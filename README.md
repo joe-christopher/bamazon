@@ -1,7 +1,9 @@
 # bamazon
 
 
-"Bamazon" is an Amazon-like storefront. The bamazonCustomer application displays all the product information and allows the user to place orders depletes stock from the store's inventory.
+"Bamazon" is an Amazon-like storefront. 
+
+The bamazonCustomer application displays all the product information and allows the user to place orders depletes stock from the store's inventory.
 
 The app prompts users with two messages.
 
@@ -28,3 +30,25 @@ https://drive.google.com/file/d/1QYyd2ANlJULJ4iUlgtIzk2as3DdDFbp-/view
 The screenshot of the data after the video demo:
 ![Post Testing](https://github.com/joe-christopher/bamazon/blob/master/images/Post-Customer%20Testing.png)
 
+
+The bamazonManager application list a set of the following menu options:
+
+    * View Products for Sale
+    
+    * View Low Inventory
+    
+    * Add to Inventory
+    
+    * Add New Product
+
+The screenshot of the data before the video demo:
+![Pre Testing](https://github.com/joe-christopher/bamazon/blob/master/images/Pre-Manager%20Testing.png)
+
+
+bamazonCustomer video demo
+https://drive.google.com/file/d/1QYyd2ANlJULJ4iUlgtIzk2as3DdDFbp-/view
+
+
+
+The screenshot of the data after the video demo:
+![Post Testing](https://github.com/joe-christopher/bamazon/blob/master/images/Post-Manager%20Testing.png)
