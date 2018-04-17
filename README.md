@@ -17,7 +17,7 @@ However, if the store doeshave enough of the product, the customer's order is fu
 
 
 The screenshot of the data before the video demo:
-![Pre Testing](/images/Pre-Customer Testing.png)
+![Pre Testing](https://github.com/joe-christopher/bamazon/blob/master/images/Pre-Customer%20Testing.png)
 
 
 bamazonCustomer video demo
