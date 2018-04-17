@@ -45,7 +45,7 @@ The screenshot of the data before the video Manager demo:
 ![Pre Testing](https://github.com/joe-christopher/bamazon/blob/master/images/Pre-Manager%20Testing.png)
 
 
-bamazonCustomer video demo
+bamazonManager video demo
 https://drive.google.com/file/d/1rvKv5jIuDhABNi0KrDLyoG7vufwA7mPK/view
 
 
