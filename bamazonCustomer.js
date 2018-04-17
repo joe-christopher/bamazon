@@ -108,7 +108,7 @@ function buyProducts(res)
                         console.log("Quantity: ".green + orderQuantity + "\r");
                         console.log("Price: ".green + price + "\r");
                         console.log("Your total is:  ".green + total);
-                       
+                       4
                     
         
                     }

@@ -73,7 +73,7 @@ function displayDepartments()
       console.log("SALES BY DEPARTMENT".blue );
       console.log(table.toString());
   
-      start();
+      start();4
 
       });
 }
