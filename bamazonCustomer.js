@@ -93,19 +93,23 @@ function buyProducts(res)
                     var newStockQuantity = parseInt(inStockQuantity) - parseInt(orderQuantity);
                     var price = chosenItem.price;
                     var total = price * orderQuantity;
-        
+                    var totalSales = parseFloat(chosenItem.product_sales) + parseFloat(total)
+                    
         
                     //if there's enough inventory, change inventory and show customer total purchase cost
                     //       
                     if (orderQuantity <= inStockQuantity) {
-                        connection.query('UPDATE products SET ? WHERE item_id = ?', [{ stock_quantity: newStockQuantity }, item_id]);
+                        connection.query('UPDATE products SET stock_quantity = ' + newStockQuantity + ', product_sales = ' + totalSales
+                        + ' WHERE item_id = ' + item_id);
+                        
         
-                        // connection.end();
                         console.log("\nThe following purchase is confirmed: \r".green);
                         console.log("Product selected: ".green + orderProduct + "\r");
                         console.log("Quantity: ".green + orderQuantity + "\r");
                         console.log("Price: ".green + price + "\r");
                         console.log("Your total is:  ".green + total);
+                       
+                    
         
                     }
                     //else, notify customer of insufficient inventory

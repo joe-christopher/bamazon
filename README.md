@@ -46,7 +46,7 @@ The screenshot of the data before the video demo:
 
 
 bamazonCustomer video demo
-https://drive.google.com/file/d/1QYyd2ANlJULJ4iUlgtIzk2as3DdDFbp-/view
+https://drive.google.com/file/d/1rvKv5jIuDhABNi0KrDLyoG7vufwA7mPK/view
 
 
 
