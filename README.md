@@ -61,8 +61,8 @@ The bamazonCustomer app lists a set of the following menu options:
    * Create New Department
 
 The screenshots of the data before the video Supervisor demo:
-![Pre Testing](https://github.com/joe-christopher/bamazon/blob/master/images/Pre-Supervisor Testing Departments.png)
-![Pre Testing](https://github.com/joe-christopher/bamazon/blob/master/images/Pre-Supervisor Testing Products.png)
+![Pre Testing](https://github.com/joe-christopher/bamazon/blob/master/images/Pre-Supervisor%20Testing%20Departments.png)
+![Pre Testing](https://github.com/joe-christopher/bamazon/blob/master/images/Pre-Supervisor%20Testing%20Products.png)
 
 bamazonSupervisor video demo
 https://drive.google.com/file/d/1JdF6yiqpG9yPdJEuC7LUW6mljs50aZaH/view
@@ -70,5 +70,5 @@ https://drive.google.com/file/d/1JdF6yiqpG9yPdJEuC7LUW6mljs50aZaH/view
 
 
 The screenshot of the data after the video Supervisor demo:
-![Pre Testing](https://github.com/joe-christopher/bamazon/blob/master/images/Post-Supervisor Testing Departments.png)
-![Pre Testing](https://github.com/joe-christopher/bamazon/blob/master/images/Post-Supervisor Testing Products.png)
+![Pre Testing](https://github.com/joe-christopher/bamazon/blob/master/images/Post-Supervisor%20Testing%20Departments.png)
+![Pre Testing](https://github.com/joe-christopher/bamazon/blob/master/images/Post-Supervisor%20Testing%20Products.png)
